@@ -2,12 +2,31 @@
     <from action="../app/controllers/index.js">
         <label for="keyword">keyword :</label>
         <input type="text" id="keyword">
-        <button class="btn waves-effect waves-light" type="submit" name="action" onclick="">SEARCH
+        <button class="btn waves-effect waves-light" type="submit" name="action" onclick="indexController.DisplayBooks()">SEARCH
             <i class="material-icons right">search</i>
         </button>
     </from>
-    <table id="booksTable">
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Item Name</th>
+            <th>Item Price</th>
+        </tr>
+        </thead>
 
+        <tbody id="booksTable">
+
+        </tbody>
     </table>
+</div>
+<div id="volumeImageModal" class="modal">
+    <div class="modal-content">
+        <h5 id="book_title"></h5>
+        <img src="#" id="book_img">
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="modal-close waves-effect waves-green tbn-flat">Close</a>
+    </div>
 </div>
 

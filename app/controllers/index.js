@@ -2,30 +2,40 @@ class IndexController extends BaseController {
     constructor() {
         super();
         //this.MakeJsonList("https://www.googleapis.com/books/v1/volumes?q=wind")
-        this.DisplayBooks("wind")
+        this.DisplayBooks()
     }
 
-    DisplayBookImage(bookId)
+    DisplayBookImage(bookId, imglink)
     {
-        $(`#bookImageModalImage`).src = "#"
-        //this.model.getBook(bookId, bookId)
+        if (imglink !== undefined)
+        {
+            this.model.getBook(bookId, volume => {
+                //console.log(volume);
+                document.getElementById("book_title").innerText = volume.volumeInfo.title;
+                document.getElementById("book_img").src = volume.volumeInfo.imageLinks.thumbnail
+                this.getModal('#volumeImageModal').open()
+            })
+        }
     }
 
-    OpenBookImage(bookId)
-    {}
-
-    DisplayBooks(name)
+    DisplayBooks()
     {
-        this.model.getBooks(name, books => {
-            let content = '';
-            console.log(books.items);
-            for (const book of books.items){
-                content += '<tr><td><a href="#" onclick="indexController.DisplayBookImage(`$(book.volumeInfo.imageLinks.thumbnail)`)">${book.volumeInfo.title}</a></td>' +
-                    '<td>${book.volumeInfo.description}</td>' +
-                    '<a class="btn" onclick="indexController.OpenBookImage(`$book.id `)"></tr>'
-            }
-            document.getElementById("booksTable").innerHTML = content
-        })
+        const keyword = document.getElementById("keyword").value;
+        if (keyword.length !== 0) {
+            this.model.getBooks(keyword, books => {
+                document.getElementById("booksTable").innerHTML = ""
+                let content = '';
+                for (const book of books.items) {
+                    let newRow = document.querySelector('table').insertRow(-1);
+                    let newCell = newRow.insertCell(0);
+                    newCell.innerHTML = `<a class="nameBook" onclick="indexController.DisplayBookImage('${book.id}', '${book.volumeInfo.imageLinks.thumbnail}')">${book.volumeInfo.title}</a>`;
+                    newCell = newRow.insertCell(1);
+                    newCell.innerHTML = book.volumeInfo.description;
+                }
+                document.getElementById("booksTable").innerHTML = content
+
+            })
+        }
     }
 }
 
