@@ -17,14 +17,14 @@ class IndexController extends BaseController {
     DisplayBooks(name)
     {
         this.model.getBooks(name, books => {
-            let content = ''
+            let content = '';
             console.log(books.items);
             for (const book of books.items){
-                content += '<tr><td><a href="#" onclick="indexController.DisplayBookImage(`$(book.id)`)">book.volumeInfo.title</a></td>' +
-                    '<td>${book.description}</td>' +
-                    '<td><a class="btn" onclick="indexController.OpenBookImage(`$book.id `)"><i></a></td>'
+                content += '<tr><td><a href="#" onclick="indexController.DisplayBookImage(`$(book.volumeInfo.imageLinks.thumbnail)`)">${book.volumeInfo.title}</a></td>' +
+                    '<td>${book.volumeInfo.description}</td>' +
+                    '<a class="btn" onclick="indexController.OpenBookImage(`$book.id `)"></tr>'
             }
-            $(`#booksTable`).innerHTML = content
+            document.getElementById("booksTable").innerHTML = content
         })
     }
 }
